@@ -11,9 +11,17 @@ class Metallize::Page::Link
     link.text
   end
 
+  def dom_id
+    link.attribute('id')
+  end
+
+  def dom_class
+    link.attribute('class')
+  end
+
   def href
     link_attribute = link.attribute('href')
-    URI(link_attribute).path
+    URI(link_attribute).to_s
   end
 
   def click
