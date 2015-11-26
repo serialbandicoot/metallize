@@ -251,16 +251,7 @@ class Metallize::Form
 
     def submit
       # 1. Loop through the non hidden fields and if they're active and displayed enter the value
-      @fields.each do |field|
-        unless field.kind_of?(Metallize::Form::Hidden)
-
-          element = @driver.find_element(name: field.name)
-          if element.displayed? and !field.value.empty?
-            element.send_keys field.value
-          end
-
-        end
-      end
+      fill_in_field_data
 
       # 2. Submit Form
       @buttons.first.node.click
@@ -270,6 +261,20 @@ class Metallize::Form
       # 4. Return new Page
       Metallize::Page.new(@driver)
 
+    end
+
+    def fill_in_field_data
+      @fields.each do |field|
+        unless field.kind_of?(Metallize::Form::Hidden)
+
+          element = @driver.find_element(name: field.name)
+          if element.displayed? and !field.value.empty?
+            element.clear
+            element.send_keys field.value
+          end
+
+        end
+      end
     end
 
     def wait_for_page(driver)
