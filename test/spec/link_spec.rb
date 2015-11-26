@@ -32,4 +32,14 @@ describe '#HTML Element Link' do
     expect(page.title).to include('UK Software Alliance')
   end
 
+  it 'should contain an input field with a selenium-webdriver type attribute' do
+    a = @page.link_with(text: 'UKSA')
+    expect(a.link.attribute('type')).to eq 'text/css'
+  end
+
+  it 'should contain an input field with a selenium-webdriver tag_name attribute' do
+    a = @page.link_with(text: 'UKSA')
+    expect(a.link.tag_name).to eq 'a'
+  end
+
 end

@@ -40,4 +40,9 @@ describe '#HTML Element Select' do
     expect(inspect).to include('value: 4')
   end
 
+  it 'should display an option with selenium-webdriver node attribute' do
+    option_value = @form.field_with(name: 'numbers').selected_options
+    expect(option_value.first.node.tag_name).to eq 'option'
+  end
+
 end
