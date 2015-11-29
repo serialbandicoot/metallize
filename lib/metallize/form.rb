@@ -42,8 +42,9 @@ class Metallize::Form
     end
 
     def parse
-      @fields       = []
-      @buttons      = []
+      @fields        = []
+      @buttons       = []
+      @radiobuttons = []
 
       form_node = @driver.find_elements(:tag_name, 'input')
       form_node.each do |node|
@@ -51,6 +52,8 @@ class Metallize::Form
         name = node.attribute('name')
         next if name.nil? && !%w[submit button image].include?(type)
         case type
+          when 'radio'
+            @radiobuttons << RadioButton.new(node, self)
           when 'submit'
             @buttons << Submit.new(node)
           when 'button'
@@ -233,9 +236,9 @@ class Metallize::Form
             q.pp field
           end
         }
-        # q.breakable; q.group(1, '{radiobuttons', '}') {
-        #   radiobuttons.each { |b| q.breakable; q.pp b }
-        # }
+        q.breakable; q.group(1, '{radiobuttons', '}') {
+          radiobuttons.each { |b| q.breakable; q.pp b }
+        }
         # q.breakable; q.group(1, '{checkboxes', '}') {
         #   checkboxes.each { |b| q.breakable; q.pp b }
         # }
@@ -249,6 +252,8 @@ class Metallize::Form
     end
 
     elements_with :field
+
+    elements_with :radiobutton
 
     def submit
       # 1. Loop through the non hidden fields and if they're active and displayed enter the value

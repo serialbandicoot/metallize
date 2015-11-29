@@ -12,9 +12,9 @@ describe '#HTML Element Form' do
     expect(@form.fields.count).to eq 2
   end
 
-  it 'should display form by name' do
-    # form = @page.form['post_inputs']
-    # pp form
-  end
+  # it 'should display form by name' do
+  #   # form = @page.form['post_inputs']
+  #   # pp form
+  # end
 
 end

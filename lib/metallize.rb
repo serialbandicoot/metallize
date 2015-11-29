@@ -14,11 +14,13 @@ require 'metallize/form/text'
 require 'metallize/form/multi_select_list'
 require 'metallize/form/select_list'
 require 'metallize/form/option'
+require 'metallize/form/radio_button'
 
 require 'metallize/page'
 require 'metallize/page/link'
 
 require 'metallize/selenenium_webdriver_element'
+require 'metallize/array'
 
 class Metallize
 
