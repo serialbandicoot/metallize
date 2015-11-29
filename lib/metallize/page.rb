@@ -19,8 +19,9 @@ class Metallize::Page
   end
 
   def links
-    links = driver.find_elements(:tag_name, 'a')
-    links.map {|link| Link.new(driver, link)}
+    @links ||= driver.find_elements(:tag_name, 'a').map do |link|
+      Link.new(driver, link)
+    end
   end
 
   def forms

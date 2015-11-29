@@ -54,4 +54,14 @@ describe '#HTML Page' do
     expect(@page.forms.count).to be > 0
   end
 
+  it 'should display link with text' do
+    link = @page.link_with(text: 'First')
+    expect(link.href).to eq '/first'
+  end
+
+  it 'should contains multiple links' do
+    links = @page.links
+    expect(links.count).to eq 2
+  end
+
 end
