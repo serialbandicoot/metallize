@@ -15,6 +15,7 @@ require 'metallize/form/multi_select_list'
 require 'metallize/form/select_list'
 require 'metallize/form/option'
 require 'metallize/form/radio_button'
+require 'metallize/form/check_box'
 
 require 'metallize/page'
 require 'metallize/page/link'
