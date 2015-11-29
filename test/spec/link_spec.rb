@@ -9,21 +9,26 @@ describe '#HTML Element Link' do
 
   it 'should display href' do
     link = @page.link_with(text: 'UKSA')
-    expect(link.href).to eq 'http://uksa.eu/'
+    expect(link.href).to eq '/articles-main'
   end
 
-  it 'should should be found by its dom id' do
+  it 'should be found by its dom id' do
     link = @page.link_with(id: 'uksa_id')
     expect(link.text).to eq 'UKSA'
   end
 
-  it 'should should be found by its id' do
+  it 'should be found by its id' do
     link = @page.link_with(id: 'uksa_id')
     expect(link.text).to eq 'UKSA'
   end
 
-  it 'should should be found by its class' do
+  it 'should be found by its class' do
     link = @page.link_with(class: 'uksa_class')
+    expect(link.text).to eq 'UKSA'
+  end
+
+  it 'should be found with href' do
+    link = @page.link_with(href: '/articles-main')
     expect(link.text).to eq 'UKSA'
   end
 

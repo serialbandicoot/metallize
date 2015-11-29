@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe '#HTML Element Link' do
+describe '#HTML Element Input Field' do
 
   before(:each) do
     file = File.join(File.dirname(__FILE__),"../","htdocs/input_field.html")

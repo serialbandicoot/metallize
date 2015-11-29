@@ -21,7 +21,7 @@ class Metallize::Page::Link
 
   def href
     link_attribute = link.attribute('href')
-    URI(link_attribute).to_s
+    URI(link_attribute).path
   end
 
   def click

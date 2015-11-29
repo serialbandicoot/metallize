@@ -18,6 +18,8 @@ require 'metallize/form/option'
 require 'metallize/page'
 require 'metallize/page/link'
 
+require 'metallize/selenenium_webdriver_element'
+
 class Metallize
 
   attr_reader :driver
@@ -36,6 +38,7 @@ class Metallize
   end
 
   alias :close :quit
+  alias :shutdown :quit
 
   def method_missing(sym)
     driver.send sym

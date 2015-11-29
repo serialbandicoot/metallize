@@ -15,7 +15,7 @@ class Metallize::Page
   end
 
   def uri
-    driver.current_url
+    URI(driver.current_url)
   end
 
   def links
@@ -26,6 +26,14 @@ class Metallize::Page
   def forms
     forms = driver.find_elements(:tag_name, 'form')
     forms.map {|form| Metallize::Form.new(driver, form)}
+  end
+
+  def at(args)
+    if args.kind_of?(String)
+      driver.find_element(css: args)
+    else
+      driver.find_element(args)
+    end
   end
 
   def pretty_print(q)
@@ -59,4 +67,7 @@ class Metallize::Page
 
   elements_with :link
 
+  elements_with :form
+
 end
+
