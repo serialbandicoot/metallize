@@ -1,10 +1,11 @@
 class Metallize::Page::Link
 
-  attr_reader :driver, :link
+  attr_reader :driver, :link, :page
 
-  def initialize(driver, link)
+  def initialize(driver, link, page)
     @driver = driver
     @link   = link
+    @page   = page
   end
 
   def text
@@ -21,7 +22,12 @@ class Metallize::Page::Link
 
   def href
     link_attribute = link.attribute('href')
-    URI(link_attribute).path
+    link_attribute = link.attribute('src') if link_attribute.nil?
+    URI(link_attribute).path unless link_attribute.nil?
+  end
+
+  def target
+    link.attribute('target')
   end
 
   def click

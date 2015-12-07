@@ -65,10 +65,18 @@ class Metallize::Form
             @fields << Hidden.new(node, node.attribute('value') || '')
           when 'text'
             @fields << Text.new(node, node.attribute('value') || '')
+          when 'textarea'
+            @fields << Textarea.new(node, node.attribute('value') || '')
           else
             @fields << Field.new(node, node.attribute('value') || '')
         end
 
+      end
+
+      form_node = @driver.find_elements(:tag_name, 'textarea')
+      form_node.each do |node|
+        next unless node['name']
+        @fields << Textarea.new(node)
       end
 
       form_node = @driver.find_elements(:tag_name, 'select')

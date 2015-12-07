@@ -9,7 +9,7 @@ describe '#HTML Element Link' do
 
   it 'should display href' do
     link = @page.link_with(text: 'UKSA')
-    expect(link.href).to eq '/articles-main'
+    expect(link.href).to include '/result.html'
   end
 
   it 'should be found by its dom id' do
@@ -28,13 +28,16 @@ describe '#HTML Element Link' do
   end
 
   it 'should be found with href' do
-    link = @page.link_with(href: '/articles-main')
+    file = File.join(File.dirname(__FILE__),"../","htdocs/link_href.html")
+    page = @metz.get "file://#{file}"
+    link = page.link_with(href: '/articles-main')
     expect(link.text).to eq 'UKSA'
   end
 
   it 'should go to the location after being clicked' do
-    page = @page.link_with(text: 'UKSA').click
-    expect(page.title).to include('UK Software Alliance')
+    link = @page.links_with(text: 'UKSA').first
+    page = link.click
+    expect(page.title).to include('Metallize Results Title')
   end
 
   it 'should contain an input field with a selenium-webdriver type attribute' do
@@ -45,6 +48,11 @@ describe '#HTML Element Link' do
   it 'should contain an input field with a selenium-webdriver tag_name attribute' do
     a = @page.link_with(text: 'UKSA')
     expect(a.link.tag_name).to eq 'a'
+  end
+
+  it 'should contain a base target' do
+    a = @page.link_with(text: 'UKSA')
+    expect(a.target).to eq '_self'
   end
 
 end
