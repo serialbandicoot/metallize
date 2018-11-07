@@ -1,6 +1,7 @@
-require 'metallize'
+require_relative '../../lib/metallize'
 require 'rubygems'
 require 'webrick'
+require 'mechanize'
 
 include WEBrick
 
@@ -12,7 +13,7 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before(:all) do
-    browser = [:chrome, :firefox].sample
+    browser = [:chrome].sample
     puts "Used Browser: #{browser}"
     @metz = Metallize.new(browser)
   end

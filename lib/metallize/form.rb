@@ -8,32 +8,23 @@ class Metallize::Form
 
     attr_reader :fields, :buttons, :file_uploads, :radiobuttons, :checkboxes
 
-    # Content-Type for form data (i.e. application/x-www-form-urlencoded)
-    attr_accessor :enctype
-
-    # Character encoding of form data (i.e. UTF-8)
-    attr_accessor :encoding
-
-    # When true, character encoding errors will never be never raised on form
-    # submission.  Default is false
-    attr_accessor :ignore_encoding_error
-
     alias :elements :fields
 
     attr_reader :form_node
     attr_reader :page
 
-    attr_accessor :method, :action
-
     attr_reader :fields, :buttons
+
+    attr_reader :metz, :driver
 
     alias :elements :fields
 
-    def initialize(driver, form)
+    def initialize(driver, form, metz)
       @driver = driver
       @form   = form
       @method = (@form.attribute('method') || 'GET').upcase
       @action = @form.attribute('action')
+      @metz   = metz
       parse
     end
 
@@ -73,19 +64,19 @@ class Metallize::Form
 
       end
 
-      form_node = @driver.find_elements(:tag_name, 'textarea')
+      form_node = driver.find_elements(:tag_name, 'textarea')
       form_node.each do |node|
         next unless node['name']
         @fields << Textarea.new(node)
       end
 
-      form_node = @driver.find_elements(:tag_name, 'select')
+      form_node = driver.find_elements(:tag_name, 'select')
       form_node.each do |node|
         next unless node['name']
         @fields << SelectList.new(node)
       end
 
-      form_node = @driver.find_elements(:tag_name, 'button')
+      form_node = driver.find_elements(:tag_name, 'button')
       form_node.each do |node|
         @buttons << Button.new(node)
       end
@@ -276,10 +267,10 @@ class Metallize::Form
       submit_button = @buttons.select {|x| x.kind_of?(Metallize::Form::Submit) }.first
       submit_button.node.click
 
-      wait_for_page(@driver)
+      wait_for_page(driver)
 
       # 4. Return new Page
-      Metallize::Page.new(@driver)
+      Metallize::Page.new(driver, metz)
 
     end
 

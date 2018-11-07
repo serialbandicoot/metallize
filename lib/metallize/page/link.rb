@@ -1,11 +1,17 @@
 class Metallize::Page::Link
 
-  attr_reader :driver, :link, :page
+  attr_reader :driver, :link, :metz
 
-  def initialize(driver, link, page)
+  def initialize(driver, link, metz)
     @driver = driver
     @link   = link
-    @page   = page
+    @metz   = metz
+
+    wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+    wait.until {
+      driver.execute_script("return document.readyState;") == "complete"
+    }
+
   end
 
   def text
@@ -40,7 +46,8 @@ class Metallize::Page::Link
     }
 
     # 2. Return new Page
-    Metallize::Page.new(driver)
+    Metallize::Page.new(driver, metz)
+
   end
 
   def pretty_print(q) # :nodoc:

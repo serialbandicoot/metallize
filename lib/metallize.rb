@@ -1,44 +1,47 @@
-require 'metallize/version'
+require_relative 'metallize/version'
 require 'selenium-webdriver'
 require 'pp'
 
-require 'metallize/page'
-require 'metallize/element_matcher'
+require_relative 'metallize/element_matcher'
+require_relative 'metallize/history'
 
-require 'metallize/form'
-require 'metallize/form/field'
-require 'metallize/form/button'
-require 'metallize/form/hidden'
-require 'metallize/form/submit'
-require 'metallize/form/text'
-require 'metallize/form/textarea'
-require 'metallize/form/multi_select_list'
-require 'metallize/form/select_list'
-require 'metallize/form/option'
-require 'metallize/form/radio_button'
-require 'metallize/form/check_box'
+require_relative 'metallize/form'
+require_relative 'metallize/form/field'
+require_relative 'metallize/form/button'
+require_relative 'metallize/form/hidden'
+require_relative 'metallize/form/submit'
+require_relative 'metallize/form/text'
+require_relative 'metallize/form/textarea'
+require_relative 'metallize/form/multi_select_list'
+require_relative 'metallize/form/select_list'
+require_relative 'metallize/form/option'
+require_relative 'metallize/form/radio_button'
+require_relative 'metallize/form/check_box'
 
-require 'metallize/page'
-require 'metallize/page/link'
-require 'metallize/page/image'
-require 'metallize/page/base'
-require 'metallize/page/label'
-require 'metallize/page/frame'
+require_relative 'metallize/page'
+require_relative 'metallize/page/link'
+require_relative 'metallize/page/image'
+require_relative 'metallize/page/base'
+require_relative 'metallize/page/label'
+require_relative 'metallize/page/frame'
 
-require 'metallize/selenenium_webdriver_element'
-require 'metallize/array'
+require_relative 'metallize/selenenium_webdriver_element'
+require_relative 'metallize/array'
 
 class Metallize
 
   attr_reader :driver
 
-  def initialize(browser)
-    @driver = Selenium::WebDriver.for browser
+  attr_accessor :history
+
+  def initialize(browser, *opts)
+    @driver   = Selenium::WebDriver.for browser
+    @history  = Metallize::History.new
   end
 
   def get(uri)
     driver.get(uri)
-    Page.new(driver)
+    Page.new(driver, self)
   end
 
   def quit

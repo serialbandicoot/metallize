@@ -4,15 +4,38 @@ class Metallize::Page
 
   extend Metallize::ElementMatcher
 
-  attr_reader :driver
+  attr_reader :driver, :metz
 
-  def initialize(driver)
+  def initialize(driver, metz)
     @driver = driver
+    @metz   = metz
+    # page_wait
+  end
+
+  def page_wait
+
+    if metz.history.count != 0
+      found = false
+      last_url = metz.history.last
+      while driver.current_url == last_url do
+        puts 'waiting'
+        sleep 1
+      end
+
+      if found
+        @metz.history << driver.current_url
+      end
+
+    else
+      @metz.history << driver.current_url
+    end
 
     wait = Selenium::WebDriver::Wait.new(:timeout => 10)
     wait.until {
       driver.execute_script("return document.readyState;") == "complete"
     }
+
+    self
 
   end
 
@@ -26,7 +49,7 @@ class Metallize::Page
 
   def links
     @links ||= driver.find_elements(:tag_name, 'a').map do |link|
-      Link.new(driver, link, self)
+      Link.new(driver, link, metz)
     end
   end
 
@@ -68,7 +91,7 @@ class Metallize::Page
   def forms
     @forms = driver.find_elements(:tag_name, 'form')
     @forms.map do |form|
-      Metallize::Form.new(driver, form)
+      Metallize::Form.new(driver, form, metz)
     end
   end
 

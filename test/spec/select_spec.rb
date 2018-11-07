@@ -1,4 +1,4 @@
-require 'spec_helper'
+require_relative 'spec_helper'
 
 describe '#HTML Element Select' do
 
@@ -43,6 +43,13 @@ describe '#HTML Element Select' do
   it 'should display an option with selenium-webdriver node attribute' do
     option_value = @form.field_with(name: 'numbers').selected_options
     expect(option_value.first.node.tag_name).to eq 'option'
+  end
+
+  it 'should change when a new value is selected' do
+    @form.field_with(name: /umbe/).value = '3'
+    page = @page.forms.first
+    option_value = page.field_with(name: 'numbers').value
+    expect(option_value).to eq '3'
   end
 
 end
