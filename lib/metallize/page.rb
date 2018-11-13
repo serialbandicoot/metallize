@@ -103,6 +103,14 @@ class Metallize::Page
     end
   end
 
+  def ats(args)
+    if args.kind_of?(String)
+      driver.find_elements(css: args)
+    else
+      driver.find_elements(args)
+    end
+  end
+
   def pretty_print(q)
     q.object_group(self) {
       q.breakable
