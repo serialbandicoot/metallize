@@ -17,4 +17,9 @@ describe '#Sainsburys' do
     expect(@page.ats(css: '.productLister > li').length).to be > 10
   end
 
+  it 'should link to the multi product search page' do
+    shopping_list = @page.link_with(text: 'Multi-product search').click
+    expect(shopping_list.title).to eq 'Shopping List'
+  end
+
 end
