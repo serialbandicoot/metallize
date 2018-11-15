@@ -2,7 +2,7 @@ require_relative 'element_matcher'
 
 class Metallize::Form
 
-  extend Metallize::ElementMatcher
+    extend Metallize::ElementMatcher
 
     attr_accessor :method, :action, :name
 
@@ -290,7 +290,7 @@ class Metallize::Form
 
     def wait_for_page(driver)
       # 3. Wait for the Page State to Return
-      wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+      wait = Selenium::WebDriver::Wait.new(:timeout => @metz.timeout)
       wait.until {
         driver.execute_script("return document.readyState;") == "complete"
       }

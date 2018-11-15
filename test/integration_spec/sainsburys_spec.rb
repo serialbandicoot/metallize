@@ -22,4 +22,8 @@ describe '#Sainsburys' do
     expect(shopping_list.title).to eq 'Shopping List'
   end
 
+  it 'should set the timeout' do
+    expect(@metz.timeout).to eq 5
+  end
+
 end

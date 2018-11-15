@@ -34,9 +34,18 @@ class Metallize
 
   attr_accessor :history
 
-  def initialize(browser, *opts)
+  attr_accessor :timeout
+
+  def initialize(browser = :chrome, *opts)
     @driver   = Selenium::WebDriver.for browser
     @history  = Metallize::History.new
+    @timeout = 10
+
+    yield self if block_given?
+  end
+
+  def timeout= timeout
+    @timeout = timeout
   end
 
   def get(uri)

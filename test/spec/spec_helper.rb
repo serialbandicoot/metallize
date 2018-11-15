@@ -1,4 +1,4 @@
-require_relative '../../lib/metallize'
+require 'metallize'
 require 'rubygems'
 require 'webrick'
 
