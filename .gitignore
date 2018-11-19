@@ -51,4 +51,4 @@ build-iPhoneSimulator/
 .rvmrc
 .idea/*
 .DS_Store
-test/.DS_Store
+Gemfile.lock
