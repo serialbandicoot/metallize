@@ -60,6 +60,8 @@ class Metallize::Form
             @fields << Text.new(node, node.attribute('value') || '')
           when 'textarea'
             @fields << Textarea.new(node, node.attribute('value') || '')
+          when 'file'
+            @fields << FileUpload.new(node, nil)
           else
             @fields << Field.new(node, node.attribute('value') || '')
         end

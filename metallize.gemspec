@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["samtreweek@gmail.com"]
   spec.summary       = %q{Mechanize plus Selenium}
   spec.description   = %q{Mechanize API with Selenium-WebDriver Library}
-  spec.homepage      = "http://uksa.eu"
+  spec.homepage      = "http://github.com/serialbandicoot"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files`.split($/)
