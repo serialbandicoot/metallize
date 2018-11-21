@@ -12,4 +12,10 @@ describe '#HTML Element File Uploads' do
     expect(file_uploads.type).to eq 'file'
   end
 
+  it 'should upload the file' do
+    file_uploads = @page.forms.first
+    file_uploads['pic'] = '../data/serialbandicoot.png'
+    file_uploads.submit
+  end
+
 end
