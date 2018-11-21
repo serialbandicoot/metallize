@@ -19,6 +19,7 @@ require_relative 'metallize/form/select_list'
 require_relative 'metallize/form/option'
 require_relative 'metallize/form/radio_button'
 require_relative 'metallize/form/check_box'
+require_relative 'metallize/form/file_upload'
 
 require_relative 'metallize/page'
 require_relative 'metallize/page/link'
@@ -29,6 +30,8 @@ require_relative 'metallize/page/frame'
 
 require_relative 'metallize/selenium_webdriver_element'
 require_relative 'metallize/array'
+require_relative 'metallize/util'
+
 
 class Metallize
 

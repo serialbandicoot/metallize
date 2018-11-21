@@ -18,7 +18,7 @@ describe '#HTML Element Image' do
 
   it 'should display the image src tag' do
     image = @page.images.first
-    expect(image.src).to include('uksa.png')
+    expect(image.src).to include('serialbandicoot.png')
   end
 
   it 'should display the image title' do

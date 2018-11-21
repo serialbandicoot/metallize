@@ -50,6 +50,9 @@ describe '#Sainsburys' do
   end
 
   it 'should set the timeout' do
+    @forms = @page.form_with(name: 'sol_search')
+    @forms['searchTerm'] = 'Apples'
+    @page = @forms.submit
     expect(@metz.timeout).to eq 5
   end
 
