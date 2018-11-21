@@ -12,7 +12,8 @@ This switching is not limited and can be performed as many times as desired.
 
 Inevitably there is some differences, which could prevent a completely seamless transition. 
 
-Selenium-Webdriver uses find_element / find_elements. Mechanize just allows you to interact with Nokogiri, therefore if you use at_css or css this will act more like find_elements. 
+Currently Selenium-Webdriver uses find_element / find_elements. Mechanize just allows you to interact with Nokogiri, therefore if you use at_css or css this will act more like find_elements. The future remedy will be to use a parser closer to Mechanize.
+
 
 ## Installation
 
