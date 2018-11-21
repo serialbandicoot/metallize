@@ -55,4 +55,10 @@ describe '#HTML Element Link' do
     expect(a.target).to eq '_self'
   end
 
+  it 'should go to the location after being clicked' do
+    link = @page.links_with(text: 'UKSA').first
+    page = link.click
+    expect(page.title).to include('Metallize Results Title')
+  end
+
 end
