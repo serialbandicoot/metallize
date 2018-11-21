@@ -13,9 +13,16 @@ describe '#HTML Element File Uploads' do
   end
 
   it 'should upload the file' do
+    image = File.expand_path(File.join(File.dirname(__FILE__), '../', 'data/serialbandicoot.png'))
     file_uploads = @page.forms.first
-    file_uploads['pic'] = '../data/serialbandicoot.png'
-    file_uploads.submit
+    file_uploads['pic'] = image
+    page = file_uploads.submit
+    expect(page.title).to eq 'file:///action_page.php?pic=serialbandicoot.png'
+  end
+
+  it 'should not blow up after a pretty print' do
+    file_uploads = @page.forms.first
+    pp file_uploads
   end
 
 end

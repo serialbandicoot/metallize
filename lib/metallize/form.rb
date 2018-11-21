@@ -248,9 +248,6 @@ class Metallize::Form
         q.breakable; q.group(1, '{checkboxes', '}') {
           checkboxes.each { |b| q.breakable; q.pp b }
         }
-        # q.breakable; q.group(1, '{file_uploads', '}') {
-        #   file_uploads.each { |b| q.breakable; q.pp b }
-        # }
         q.breakable; q.group(1, '{buttons', '}') {
           buttons.each { |b| q.breakable; q.pp b }
         }
@@ -289,7 +286,12 @@ class Metallize::Form
 
           element = @driver.find_element(name: field.name)
           if element.displayed? and !field.value.empty?
-            element.clear
+            # todo: https://github.com/serialbandicoot/metallize/issues/3
+            # Don't attempt to clear a FileUpload field
+            unless field.kind_of?(Metallize::Form::FileUpload)
+              element.clear
+            end
+            # todo: https://github.com/serialbandicoot/metallize/issues/2
             element.send_keys field.value
           end
 
