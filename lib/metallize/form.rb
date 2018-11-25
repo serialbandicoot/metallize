@@ -284,15 +284,36 @@ class Metallize::Form
       @fields.each do |field|
         unless field.kind_of?(Metallize::Form::Hidden)
 
-          element = @driver.find_element(name: field.name)
+          element = driver.find_element(name: field.name)
           if element.displayed? and !field.value.empty?
-            # todo: https://github.com/serialbandicoot/metallize/issues/3
+
             # Don't attempt to clear a FileUpload field
-            unless field.kind_of?(Metallize::Form::FileUpload)
+            if field.kind_of?(Metallize::Form::FileUpload)
+
+              # todo: https://github.com/serialbandicoot/metallize/issues/3
               element.clear
+              element.send_keys field.value
+
+            else
+
+              begin
+                # Build Executors
+                # todo: Pass this is as one script
+                js_size   = "return document.getElementsByName(\"#{field.name}\").length"
+                js_update = "document.getElementsByName(\"#{field.name}\")[0].value = '#{field.value}'"
+
+                if execute(driver, js_size) > 0
+                  execute(driver, js_update)
+                else
+                  raise "Unable to locate web element with javascript element #{field.name}"
+                end
+
+              rescue Exception => e
+                raise "Unable to locate web element with javascript element #{e}"
+              end
+
             end
-            # todo: https://github.com/serialbandicoot/metallize/issues/2
-            element.send_keys field.value
+
           end
 
         end
