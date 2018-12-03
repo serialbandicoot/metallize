@@ -288,10 +288,16 @@ class Metallize::Form
           if element.displayed? and !field.value.empty?
 
             # Don't attempt to clear a FileUpload field
+	
+            # todo: https://github.com/serialbandicoot/metallize/issues/2
+            element.send_keys field.value
+
             if field.kind_of?(Metallize::Form::FileUpload)
 
               # todo: https://github.com/serialbandicoot/metallize/issues/3
-              element.clear
+              if @metz.clear_field = true
+                element.clear
+              end
               element.send_keys field.value
 
             else
@@ -313,7 +319,7 @@ class Metallize::Form
               end
 
             end
-
+            
           end
 
         end
