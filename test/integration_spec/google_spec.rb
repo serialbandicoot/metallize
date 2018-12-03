@@ -21,7 +21,7 @@ RSpec.configure do |config|
 
 end
 
-describe '#Sainsburys' do
+describe '#Google' do
 
   before(:each) do
     @page = @metz.get 'http://google.com'

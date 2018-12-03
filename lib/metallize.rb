@@ -41,7 +41,7 @@ class Metallize
 
   attr_accessor :timeout
 
-  attr_accessor :clearField
+  attr_accessor :clear_field
 
   attr_accessor :mechanize
 
@@ -59,10 +59,10 @@ class Metallize
       end
     end
 
-    @history   = Metallize::History.new
-    @timeout   = 10
-    @mechanize = nil
-	@clearField = true
+    @history     = Metallize::History.new
+    @timeout     = 10
+    @mechanize   = nil
+	  @clear_field = true
 
     yield self if block_given?
   end

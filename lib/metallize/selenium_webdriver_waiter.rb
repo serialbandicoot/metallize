@@ -9,4 +9,8 @@ module Metallize::SeleniumWebdriverWaiter
     }
   end
 
+  def execute(driver, script)
+    driver.execute_script(script)
+  end
+
 end
