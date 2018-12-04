@@ -282,6 +282,40 @@ class Metallize::Form
           if element.displayed? and !field.value.empty?
             element.clear
             element.send_keys field.value
+
+            # Don't attempt to clear a FileUpload field
+	
+            # todo: https://github.com/serialbandicoot/metallize/issues/2
+            element.send_keys field.value
+
+            if field.kind_of?(Metallize::Form::FileUpload)
+
+              # todo: https://github.com/serialbandicoot/metallize/issues/3
+              if @metz.clear_field = true
+                element.clear
+              end
+              element.send_keys field.value
+
+            else
+
+              begin
+                # Build Executors
+                # todo: Pass this is as one script
+                js_size   = "return document.getElementsByName(\"#{field.name}\").length"
+                js_update = "document.getElementsByName(\"#{field.name}\")[0].value = '#{field.value}'"
+
+                if execute(driver, js_size) > 0
+                  execute(driver, js_update)
+                else
+                  raise "Unable to locate web element with javascript element #{field.name}"
+                end
+
+              rescue Exception => e
+                raise "Unable to locate web element with javascript element #{e}"
+              end
+
+            end
+            
           end
 
         end

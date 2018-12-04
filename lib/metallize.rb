@@ -40,6 +40,28 @@ class Metallize
     @driver   = Selenium::WebDriver.for browser
     @history  = Metallize::History.new
     @timeout = 10
+  attr_accessor :clear_field
+
+  attr_accessor :mechanize
+
+  # #
+  # Initialize metz
+
+  def initialize(browser = :chrome, opts = nil)
+    @driver = if opts.nil?
+       Selenium::WebDriver.for browser
+    else
+      if opts.include?(:url) && opts.include?(:desired_capabilities)
+        Selenium::WebDriver.for :remote,  :url => opts[:url], :desired_capabilities => opts[:desired_capabilities]
+      else
+        Selenium::WebDriver.for :remote, desired_capabilities: opts[:desired_capabilities]
+      end
+    end
+
+    @history     = Metallize::History.new
+    @timeout     = 10
+    @mechanize   = nil
+	  @clear_field = true
 
     yield self if block_given?
   end
