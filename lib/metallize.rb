@@ -89,4 +89,6 @@ class Metallize
   def self.inspect
     'Metallize; Mechanize API using Selenium-WebDriver'
   end
-end
+  end
+  end
+ 
