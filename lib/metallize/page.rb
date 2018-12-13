@@ -104,6 +104,9 @@ class Metallize::Page
   end
 
   def ats(args)
+  alias :at_css :at
+
+  def css(args)
     if args.kind_of?(String)
       driver.find_elements(css: args)
     else
