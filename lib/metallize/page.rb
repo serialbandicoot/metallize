@@ -155,5 +155,6 @@ class Metallize::Page
 
   elements_with :iframe
 
-end
+  end
+
 end

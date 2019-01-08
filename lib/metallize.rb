@@ -36,10 +36,6 @@ class Metallize
 
   attr_accessor :timeout
 
-  def initialize(browser = :chrome, *opts)
-    @driver   = Selenium::WebDriver.for browser
-    @history  = Metallize::History.new
-    @timeout = 10
   attr_accessor :clear_field
 
   attr_accessor :mechanize
@@ -89,6 +85,6 @@ class Metallize
   def self.inspect
     'Metallize; Mechanize API using Selenium-WebDriver'
   end
-  end
-  end
+
+end
  
