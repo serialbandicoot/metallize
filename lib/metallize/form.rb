@@ -4,6 +4,8 @@ class Metallize::Form
 
     extend Metallize::ElementMatcher
 
+    include Metallize::SeleniumWebdriverWaiter
+
     attr_accessor :method, :action, :name
 
     attr_reader :fields, :buttons, :file_uploads, :radiobuttons, :checkboxes
@@ -58,6 +60,8 @@ class Metallize::Form
             @fields << Text.new(node, node.attribute('value') || '')
           when 'textarea'
             @fields << Textarea.new(node, node.attribute('value') || '')
+          when 'file'
+            @fields << FileUpload.new(node, nil)
           else
             @fields << Field.new(node, node.attribute('value') || '')
         end
@@ -259,15 +263,20 @@ class Metallize::Form
 
     elements_with :checkbox, :checkboxes
 
-    def submit
+    #todo - 1. Button Name
+    #     - 2. Opts; a) Multiple Button names
+    def submit(button_name=nil, opts={})
       # 1. Loop through the non hidden fields and if they're active and displayed enter the value
       fill_in_field_data
 
       # 2. Submit Form
-      submit_button = @buttons.select {|x| x.kind_of?(Metallize::Form::Submit) }.first
+      submit_button = select_submit_button(button_name, opts)
+
+      wait_for_submit(submit_button)
       submit_button.node.click
 
-      wait_for_page(driver)
+      # 3. Wait for Page page
+      wait_for_page(driver, metz)
 
       # 4. Return new Page
       Metallize::Page.new(driver, metz)
@@ -278,7 +287,7 @@ class Metallize::Form
       @fields.each do |field|
         unless field.kind_of?(Metallize::Form::Hidden)
 
-          element = @driver.find_element(name: field.name)
+          element = driver.find_element(name: field.name)
           if element.displayed? and !field.value.empty?
             element.clear
             element.send_keys field.value
@@ -322,12 +331,32 @@ class Metallize::Form
       end
     end
 
-    def wait_for_page(driver)
-      # 3. Wait for the Page State to Return
+    private
+    def select_submit_button(button_name, opts)
+      if button_name.nil?
+        submit_button = @buttons.select {|x| x.kind_of?(Metallize::Form::Submit)}.first
+      else
+        submit_buttons = @buttons.select {|x|
+          x.kind_of?(Metallize::Form::Submit) && x.value.casecmp?(button_name)
+        }
+
+        submit_button = submit_buttons.first
+        if opts.include?(:instance)
+          unless opts[:instance] != opts[:instance] && (opts[:instance].is_a?(Fixnum) || opts[:instance] > submit_buttons.length)
+            submit_button = submit_buttons[opts[:instance]]
+          end
+        end
+      end
+      submit_button
+    end
+
+    #todo - wait until element is click-able / present
+    def wait_for_submit(b)
+      # 2. Wait for the submit button to be click-able
       wait = Selenium::WebDriver::Wait.new(:timeout => @metz.timeout)
-      wait.until {
-        driver.execute_script("return document.readyState;") == "complete"
-      }
+      # wait.until {
+      #   driver.find_element(b.node)
+      # }
     end
 
 
