@@ -4,6 +4,8 @@ class Metallize::Page
 
   extend Metallize::ElementMatcher
 
+  include Metallize::SeleniumWebdriverWaiter
+
   attr_reader :driver, :metz
 
   def initialize(driver, metz)
@@ -30,10 +32,7 @@ class Metallize::Page
       @metz.history << driver.current_url
     end
 
-    wait = Selenium::WebDriver::Wait.new(:timeout => 10)
-    wait.until {
-      driver.execute_script("return document.readyState;") == "complete"
-    }
+    wait_for_page(driver, metz)
 
     self
 
@@ -103,7 +102,6 @@ class Metallize::Page
     end
   end
 
-  def ats(args)
   alias :at_css :at
 
   def css(args)
@@ -155,6 +153,6 @@ class Metallize::Page
 
   elements_with :iframe
 
-  end
-
 end
+
+
