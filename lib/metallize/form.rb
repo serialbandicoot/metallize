@@ -6,7 +6,7 @@ class Metallize::Form
 
     attr_accessor :method, :action, :name
 
-    attr_reader :fields, :buttons, :file_uploads, :radiobuttons, :checkboxes
+    attr_reader :fields, :buttons, :radiobuttons, :checkboxes
 
     alias :elements :fields
 

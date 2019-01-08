@@ -19,7 +19,7 @@ class Metallize::Page
     if metz.history.count != 0
       found = false
       last_url = metz.history.last
-      while driver.current_url == last_url do
+      while driver.curgitrent_url == last_url do
         puts 'waiting'
         sleep 1
       end
