@@ -1,3 +1,9 @@
 language: ruby
 rvm:
  - 2.5
+ 
+notifications:
+  slack: teamawesome-mr66068:eYxpTcbm2q73DxFtAOTOEZrQ
+  
+  
+  
